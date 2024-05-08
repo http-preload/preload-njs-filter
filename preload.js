@@ -5,7 +5,7 @@ let initialized = false;
 let manifest;
 function init(manifestFile) {
   if (!manifestFile) {
-    throw new Error('options.manifestFile is required');
+    throw new Error('variable $preload_manifest should be set before using the preload header filter');
   }
   let obj = JSON.parse(fs.readFileSync(manifestFile, {encoding: 'utf8'}));
   if (obj.manifestVersion !== 1) {
@@ -20,17 +20,10 @@ function init(manifestFile) {
 function setHeaders(r) {
   if (!initialized) { // not initialized
     initialized = true;
-    let options;
     try {
-      options = JSON.parse(r.variables.preload_menifest);
+      init(r.variables.preload_menifest, r);
     } catch (e) {
-      r.error(e);
-      return;
-    }
-    try {
-      init(options);
-    } catch (e) {
-      r.error(e);
+      r.error(e.message);
       return;
     }
   } else if (!manifest) { // initialization failed
@@ -52,4 +45,4 @@ function setHeaders(r) {
   }
 }
 
-export default {setHeaders, getRequestHeaders};
+export default {setHeaders};

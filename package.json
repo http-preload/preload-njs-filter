@@ -1,6 +1,6 @@
 {
   "name": "preload-njs-filter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "HTTP Preload / Resource Hints support for Nginx njs",
   "keywords": [
     "njs-module",
@@ -14,8 +14,7 @@
   },
   "files": [
     "preload.js",
-    "lib",
-    "preload.bundle.js",
+    "path.js",
     "README.md"
   ],
   "repository": {
